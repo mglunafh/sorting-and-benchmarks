@@ -7,16 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
-// TODO: Object for array supplier
-
-// TODO: Statistics for benchmark runs (mean, median)
-
-// TODO: A couple of more sorting algorithms
-
-// TODO: CLI tool (JCommander)
-
-// TODO: Use of parallelism
-
 
 public class App {
 
