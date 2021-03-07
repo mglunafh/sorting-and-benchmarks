@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.List;
+
 public class App {
 
   private static final long SEED = 150;
@@ -8,7 +10,7 @@ public class App {
 
   public static void main(String[] args) {
     System.out.printf("Seed value: %d%n", SEED);
-    int size = 10000;
+    int size = 15000;
 
     Experiment experiment = new Experiment(ITERATIONS, size)
         .add(ArraySupplier.randomArraySupplier(SEED, size))
@@ -20,6 +22,9 @@ public class App {
         .add(new SelectionSort());
 
     experiment.run();
-    experiment.showResults();
+
+    PrettyPrinter prettyPrinter = new PrettyPrinter();
+    List<BenchmarkArrayRun> arrayBenchmarks = experiment.getArrayBenchmarks();
+    prettyPrinter.showResults(arrayBenchmarks);
   }
 }
