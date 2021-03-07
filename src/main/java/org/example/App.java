@@ -12,7 +12,12 @@ public class App {
     System.out.printf("Seed value: %d%n", SEED);
     int size = 15000;
 
-    Experiment experiment = new Experiment(ITERATIONS, size)
+    int count = Runtime.getRuntime().availableProcessors();
+    System.out.printf("Number of cores: %d%n", count);
+    System.out.printf("Number of elements: %d%n", size);
+    System.out.printf("Number of iterations: %d%n", ITERATIONS);
+
+    Experiment experiment = new Experiment(ITERATIONS)
         .add(ArraySupplier.randomArraySupplier(SEED, size))
         .add(ArraySupplier.sortedArraySupplier(size))
         .add(ArraySupplier.inverseSortedArraySupplier(size))

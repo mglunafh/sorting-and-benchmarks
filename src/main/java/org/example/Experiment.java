@@ -17,7 +17,6 @@ public class Experiment {
   private final List<BenchmarkArrayRun> arrayBenchmarks = new ArrayList<>();
 
   private final int iterations;
-  private final int arraySize;
 
   public Experiment add(ArraySupplier supplier) {
     suppliers.add(supplier);
@@ -30,11 +29,6 @@ public class Experiment {
   }
 
   public void run() {
-    int count = Runtime.getRuntime().availableProcessors();
-    System.out.printf("Number of cores: %d%n", count);
-    System.out.printf("Number of elements: %d%n", arraySize);
-    System.out.printf("Number of iterations: %d%n", iterations);
-
     for (ArraySupplier supplier : suppliers) {
       int[] arr = supplier.getArray();
       ArrayList<BenchmarkStrategyRun> strategyBenchmarks = new ArrayList<>();
@@ -47,12 +41,10 @@ public class Experiment {
 
   private BenchmarkStrategyRun runBenchmark(SortingStrategy strategy, int[] array) {
     long[] timings = new long[iterations];
-
     for (int i = 0; i < iterations; i++) {
       int[] tempArray = Arrays.copyOf(array, array.length);
       timings[i] = getTimingOfSortArray(strategy, tempArray);
     }
-
     return new BenchmarkStrategyRun(strategy.getName(), iterations, timings);
   }
 
