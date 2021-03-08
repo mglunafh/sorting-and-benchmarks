@@ -5,12 +5,12 @@ import java.util.List;
 public class PrettyPrinter {
 
   public void showResults(List<BenchmarkArrayRun> arrayBenchmarks) {
-    for (BenchmarkArrayRun benchmark: arrayBenchmarks) {
+    for (BenchmarkArrayRun benchmark : arrayBenchmarks) {
       printBenchmarks(benchmark);
     }
   }
 
-  private static void printTimings(BenchmarkStrategyRun run) {
+  public static void printTimings(BenchmarkStrategyRun run) {
     System.out.println("===========");
     System.out.println(run.getStrategyLabel());
     long[] timings = run.getTimings();
@@ -44,7 +44,7 @@ public class PrettyPrinter {
 
     StringBuilder rowSb = new StringBuilder();
     int tableLength = columnWidths.length;
-    for (int n: columnWidths) {
+    for (int n : columnWidths) {
       tableLength += n;
     }
     repeat(rowSb, '-', tableLength);
@@ -59,8 +59,18 @@ public class PrettyPrinter {
     System.out.println(rowSb.toString());
     System.out.println(horizontalLine);
 
+    printValueRows(runs, columnWidths, runFormatter);
+    System.out.println(horizontalLine);
+
+    printMean(runs, columnWidths);
+    printMedian(runs, columnWidths);
+    System.out.println(horizontalLine);
+  }
+
+  private static void printValueRows(List<BenchmarkStrategyRun> runs, int[] columnWidths, String runFormatter) {
+    BenchmarkStrategyRun firstRun = runs.get(0);
     for (int i = 0; i < firstRun.getIterations(); i++) {
-      rowSb = new StringBuilder();
+      StringBuilder rowSb = new StringBuilder();
       String firstVal = String.format(runFormatter, i + 1);
       rowSb.append(firstVal).append('|');
 
@@ -74,7 +84,38 @@ public class PrettyPrinter {
       }
       System.out.println(rowSb.toString());
     }
-    System.out.println(horizontalLine);
+  }
+
+  private static void printMedian(List<BenchmarkStrategyRun> runs, int[] columnWidths) {
+    StringBuilder rowSb = new StringBuilder();
+    String wordFormatter = "%" + columnWidths[0] + "s";
+    String medianWord = String.format(wordFormatter, "median");
+    rowSb.append(medianWord).append('|');
+
+    for (int runI = 0; runI < runs.size(); runI++) {
+      BenchmarkStrategyRun run = runs.get(runI);
+      int curWidth = columnWidths[runI + 1];
+      String cellFormatter = "%" + (curWidth - 3) + "d ms";
+      String cellValue = String.format(cellFormatter, (long) run.getMedian());
+      rowSb.append(cellValue).append('|');
+    }
+    System.out.println(rowSb.toString());
+  }
+
+  private static void printMean(List<BenchmarkStrategyRun> runs, int[] columnWidths) {
+    StringBuilder rowSb = new StringBuilder();
+    String wordFormatter = "%" + columnWidths[0] + "s";
+    String medianWord = String.format(wordFormatter, "mean");
+    rowSb.append(medianWord).append('|');
+
+    for (int runI = 0; runI < runs.size(); runI++) {
+      BenchmarkStrategyRun run = runs.get(runI);
+      int curWidth = columnWidths[runI + 1];
+      String cellFormatter = "%" + (curWidth - 3) + "d ms";
+      String cellValue = String.format(cellFormatter, (long) run.getMean());
+      rowSb.append(cellValue).append('|');
+    }
+    System.out.println(rowSb.toString());
   }
 
   private static StringBuilder repeat(StringBuilder sb, char ch, int n) {
