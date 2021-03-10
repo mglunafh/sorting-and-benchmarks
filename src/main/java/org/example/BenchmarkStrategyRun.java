@@ -5,6 +5,7 @@ import org.example.Utils.Stats;
 
 @Getter
 public class BenchmarkStrategyRun {
+
   private final String strategyLabel;
   private final int iterations;
   private final long[] timings;

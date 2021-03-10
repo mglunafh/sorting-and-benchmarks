@@ -1,8 +1,6 @@
 package org.example;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,8 +29,8 @@ public class ShellSort implements SortingStrategy {
           if (arr[j - shift] > temp) {
             arr[j] = arr[j - shift];
           } else {
-          arr[j] = temp;
-          break;
+            arr[j] = temp;
+            break;
           }
         }
       }
@@ -40,8 +38,9 @@ public class ShellSort implements SortingStrategy {
   }
 
   /**
-   * Generates Pratt gap sequence in descending order.
-   * OEIS A003586 sequence, 3-smooth numbers, numbers of the form 2^i*3^j with i, j >= 0
+   * Generates Pratt gap sequence in descending order. OEIS A003586 sequence, 3-smooth numbers,
+   * numbers of the form 2^i*3^j with i, j >= 0.
+   *
    * @param size boundary
    * @return Array of 3-sooth numbers bounded by size/2
    */

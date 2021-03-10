@@ -67,7 +67,8 @@ public class PrettyPrinter {
     System.out.println(horizontalLine);
   }
 
-  private static void printValueRows(List<BenchmarkStrategyRun> runs, int[] columnWidths, String runFormatter) {
+  private static void printValueRows(List<BenchmarkStrategyRun> runs, int[] columnWidths,
+      String runFormatter) {
     BenchmarkStrategyRun firstRun = runs.get(0);
     for (int i = 0; i < firstRun.getIterations(); i++) {
       StringBuilder rowSb = new StringBuilder();
