@@ -49,23 +49,12 @@ public class Experiment {
   }
 
   private static long getTimingOfSortArray(SortingStrategy strategy, int[] array) {
-//    System.out.println(Arrays.toString(array));
-
     Instant before = Instant.now();
     strategy.sortArray(array);
     Instant after = Instant.now();
 
-//    System.out.println(Arrays.toString(array));
     Duration between = Duration.between(before, after);
-    checkSorting(array);
+    Utils.checkSorting(array);
     return between.toMillis();
-  }
-
-  private static void checkSorting(int[] arr) {
-    for (int i = 1; i < arr.length; i++) {
-      if (arr[i - 1] > arr[i]) {
-        throw new RuntimeException("Array is not sorted, look at the position " + i);
-      }
-    }
   }
 }

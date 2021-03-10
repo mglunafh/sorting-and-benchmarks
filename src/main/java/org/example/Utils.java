@@ -6,6 +6,14 @@ import lombok.RequiredArgsConstructor;
 
 public class Utils {
 
+  public static void checkSorting(int[] arr) {
+    for (int i = 1; i < arr.length; i++) {
+      if (arr[i - 1] > arr[i]) {
+        throw new RuntimeException("Array is not sorted, look at the position " + i);
+      }
+    }
+  }
+
   public static Stats getStats(long[] array) {
 
     Arrays.sort(array);
@@ -15,7 +23,7 @@ public class Utils {
       mean += (array[i] - mean) / (i + 1);
     }
 
-    return new Stats(median, mean);
+    return new Stats(median, Math.round(mean));
   }
 
   @Getter

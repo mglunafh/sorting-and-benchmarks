@@ -10,7 +10,7 @@ public class App {
 
   public static void main(String[] args) {
     System.out.printf("Seed value: %d%n", SEED);
-    int size = 15000;
+    int size = 30000;
 
     int count = Runtime.getRuntime().availableProcessors();
     System.out.printf("Number of cores: %d%n", count);
@@ -23,6 +23,7 @@ public class App {
         .add(ArraySupplier.inverseSortedArraySupplier(size))
         .add(new BubbleSort())
         .add(new StandardSort())
+        .add(new ShellSort())
         .add(new InsertionSort())
         .add(new SelectionSort());
 
