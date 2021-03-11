@@ -1,5 +1,12 @@
-// TODO: A couple of more sorting algorithms
+- A couple of more types of arrays
+TODO: generally sorted array, smth like arr[i] = i + rand (1, 5)
 
-// TODO: CLI tool (JCommander)
+- CLI tool (JCommander)
+TODO: implement general CLI capabilities
 
-// TODO: Use of parallelism
+- A couple of more sorting algorithms
+TODO: heap sort
+TODO: binary tree sort (?)
+
+- Use of parallelism
+TODO: Implement suse of parallelism for O(n^2) algorithms
