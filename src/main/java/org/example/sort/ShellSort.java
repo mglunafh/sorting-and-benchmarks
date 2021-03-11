@@ -1,11 +1,11 @@
-package org.example;
+package org.example.sort;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ShellSort implements SortingStrategy {
+public class ShellSort implements AbstractSort {
 
 
   @Override

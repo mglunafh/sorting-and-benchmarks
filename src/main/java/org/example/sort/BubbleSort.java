@@ -1,8 +1,8 @@
-package org.example;
+package org.example.sort;
 
 import java.util.Locale;
 
-public class BubbleSort implements SortingStrategy {
+public class BubbleSort implements AbstractSort {
 
   @Override
   public String getName() {

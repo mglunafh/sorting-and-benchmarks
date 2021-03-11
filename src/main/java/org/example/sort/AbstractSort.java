@@ -1,6 +1,6 @@
-package org.example;
+package org.example.sort;
 
-public interface SortingStrategy {
+public interface AbstractSort {
 
   String getName();
 

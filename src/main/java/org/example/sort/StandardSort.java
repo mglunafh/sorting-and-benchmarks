@@ -1,9 +1,9 @@
-package org.example;
+package org.example.sort;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-public class StandardSort implements SortingStrategy {
+public class StandardSort implements AbstractSort {
 
   @Override
   public String getName() {

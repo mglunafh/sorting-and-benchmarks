@@ -2,6 +2,11 @@ package org.example;
 
 
 import java.util.List;
+import org.example.sort.BubbleSort;
+import org.example.sort.InsertionSort;
+import org.example.sort.SelectionSort;
+import org.example.sort.ShellSort;
+import org.example.sort.StandardSort;
 
 public class App {
 

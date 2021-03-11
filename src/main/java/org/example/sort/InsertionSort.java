@@ -1,6 +1,6 @@
-package org.example;
+package org.example.sort;
 
-public class InsertionSort implements SortingStrategy {
+public class InsertionSort implements AbstractSort {
 
   @Override
   public String getName() {
