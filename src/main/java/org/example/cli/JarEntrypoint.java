@@ -52,13 +52,14 @@ public class JarEntrypoint {
   @Getter
   public static class BenchmarkArgs {
 
-    @Parameter(names = {"-h", "--help"}, description = "Prints this help message.", help = true)
+    @Parameter(names = {"-h", "--help"}, description = "Prints this help message.", help = true,
+        order = 0)
     private boolean help = false;
 
     @Parameter(names = "-n", description = "Size of array.")
     private int size = 1000;
 
-    @Parameter(names = "-i", description = "Number of iterations. Should be more than 2.",
+    @Parameter(names = "-i", description = "Number of iterations. Should be greater than 2.",
         validateWith = IterationValidator.class)
     private int iterations = 2;
 
@@ -67,8 +68,8 @@ public class JarEntrypoint {
         converter = SortConverter.class, validateWith = SortValidator.class, required = true)
     private List<AbstractSort> sorts = Collections.emptyList();
 
-    @Parameter(names = "--arrays", description = "Types of array to run sorting algorithms on. "
-        + "Currently supported: random, sorted, inverse_sorted",
+    @Parameter(names = "--arrays", description = "Types of array separated by comma, on which "
+        + "sorting algorithms are run. Currently supported: random, sorted, inverse_sorted",
         converter = ArrayTypeConverter.class, validateWith = ArrayTypeValidator.class, required = true)
     private List<ArraySupplier> arraySuppliers = Collections.emptyList();
   }
