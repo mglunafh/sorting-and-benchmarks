@@ -62,11 +62,13 @@ public class JarEntrypoint {
         validateWith = IterationValidator.class)
     private int iterations = 2;
 
-    @Parameter(names = "--sort", description = "Sort types to use separated by comma.",
+    @Parameter(names = "--sort", description = "Sort types to use separated by comma."
+        + " Currently supported: bubble, insertion, selection, shell, standard",
         converter = SortConverter.class, validateWith = SortValidator.class, required = true)
     private List<AbstractSort> sorts = Collections.emptyList();
 
-    @Parameter(names = "--arrays", description = "Types of array to run sorting algorithms on.",
+    @Parameter(names = "--arrays", description = "Types of array to run sorting algorithms on. "
+        + "Currently supported: random, sorted, inverse_sorted",
         converter = ArrayTypeConverter.class, validateWith = ArrayTypeValidator.class, required = true)
     private List<ArraySupplier> arraySuppliers = Collections.emptyList();
   }
