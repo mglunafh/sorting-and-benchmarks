@@ -22,10 +22,10 @@ public class App {
     System.out.printf("Number of elements: %d%n", size);
     System.out.printf("Number of iterations: %d%n", ITERATIONS);
 
-    Experiment experiment = new Experiment(ITERATIONS)
-        .add(ArraySupplier.randomArraySupplier(SEED, size))
-        .add(ArraySupplier.sortedArraySupplier(size))
-        .add(ArraySupplier.inverseSortedArraySupplier(size))
+    Experiment experiment = new Experiment(size, ITERATIONS)
+        .addSupplier(ArraySupplier.randomArraySupplier(SEED))
+        .addSupplier(ArraySupplier.sortedArraySupplier())
+        .addSupplier(ArraySupplier.inverseSortedArraySupplier())
         .add(new BubbleSort())
         .add(new StandardSort())
         .add(new ShellSort())

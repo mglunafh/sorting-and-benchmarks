@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,21 @@ public class Experiment {
   @Getter
   private final List<BenchmarkArrayRun> arrayBenchmarks = new ArrayList<>();
 
+  private final int size;
   private final int iterations;
 
-  public Experiment add(ArraySupplier supplier) {
+  public Experiment addSupplier(ArraySupplier supplier) {
     suppliers.add(supplier);
+    return this;
+  }
+
+  public Experiment addSuppliers(Collection<ArraySupplier> someSuppliers) {
+    suppliers.addAll(someSuppliers);
+    return this;
+  }
+
+  public Experiment addSuppliers(ArraySupplier... someSuppliers) {
+    suppliers.addAll(Arrays.asList(someSuppliers));
     return this;
   }
 
@@ -29,14 +41,25 @@ public class Experiment {
     return this;
   }
 
+  public Experiment add(Collection<AbstractSort> someStrategies) {
+    strategies.addAll(someStrategies);
+    return this;
+  }
+
+  public Experiment add(AbstractSort... someStrategies) {
+    strategies.addAll(Arrays.asList(someStrategies));
+    return this;
+  }
+
   public void run() {
     for (ArraySupplier supplier : suppliers) {
-      int[] arr = supplier.getArray();
+      int[] arr = supplier.getArray(size);
       ArrayList<BenchmarkStrategyRun> strategyBenchmarks = new ArrayList<>();
       for (AbstractSort strategy : strategies) {
         strategyBenchmarks.add(runBenchmark(strategy, arr));
       }
-      arrayBenchmarks.add(new BenchmarkArrayRun(supplier.getLabel(), strategyBenchmarks));
+      String label = String.format("%s, n=%d", supplier.getLabel(), size);
+      arrayBenchmarks.add(new BenchmarkArrayRun(label, strategyBenchmarks));
     }
   }
 

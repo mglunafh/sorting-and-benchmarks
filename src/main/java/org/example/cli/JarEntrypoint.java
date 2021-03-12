@@ -5,7 +5,13 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
+import org.example.ArraySupplier;
+import org.example.BenchmarkArrayRun;
+import org.example.Experiment;
+import org.example.PrettyPrinter;
+import org.example.sort.AbstractSort;
 
 public class JarEntrypoint {
 
@@ -29,13 +35,27 @@ public class JarEntrypoint {
 
     System.out.printf("Number of elements: %d%n", jArgs.getSize());
     System.out.printf("Number of iterations: %d%n", jArgs.getIterations());
-    System.out.printf("Sorts to use: %s%n", jArgs.getSorts().toString());
+    String sortsToUse = jArgs.getSorts().stream().map(AbstractSort::getName)
+        .collect(Collectors.joining(", "));
+    System.out.printf("Sorts to use: %s%n", sortsToUse);
+
+    Experiment experiment = new Experiment(jArgs.getSize(), jArgs.getIterations())
+        .addSuppliers(jArgs.getArraySuppliers())
+        .add(jArgs.getSorts());
+    experiment.run();
+
+    PrettyPrinter prettyPrinter = new PrettyPrinter();
+    List<BenchmarkArrayRun> arrayBenchmarks = experiment.getArrayBenchmarks();
+    prettyPrinter.showResults(arrayBenchmarks);
   }
 
   @Getter
   public static class BenchmarkArgs {
 
-    @Parameter(names = "-n", description = "Size of array. Default is 1000.")
+    @Parameter(names = {"-h", "--help"}, description = "Prints this help message.", help = true)
+    private boolean help = false;
+
+    @Parameter(names = "-n", description = "Size of array.")
     private int size = 1000;
 
     @Parameter(names = "-i", description = "Number of iterations. Should be more than 2.",
@@ -44,9 +64,10 @@ public class JarEntrypoint {
 
     @Parameter(names = "--sort", description = "Sort types to use separated by comma.",
         converter = SortConverter.class, validateWith = SortValidator.class, required = true)
-    private List<String> sorts = Collections.emptyList();
+    private List<AbstractSort> sorts = Collections.emptyList();
 
-    @Parameter(names = {"-h", "--help"}, help = true)
-    private boolean help = false;
+    @Parameter(names = "--arrays", description = "Types of array to run sorting algorithms on.",
+        converter = ArrayTypeConverter.class, validateWith = ArrayTypeValidator.class, required = true)
+    private List<ArraySupplier> arraySuppliers = Collections.emptyList();
   }
 }

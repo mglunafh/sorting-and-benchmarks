@@ -11,7 +11,7 @@ public class IterationValidator implements IParameterValidator {
     try {
       i = Integer.parseInt(value);
     } catch (NumberFormatException ex) {
-     throw new ParameterException("Could not parse number of iterations from parameter: " + value);
+      throw new ParameterException("Could not parse number of iterations from parameter: " + value);
     }
     if (i <= 2) {
       throw new ParameterException("Number of iterations should be more than 2.");

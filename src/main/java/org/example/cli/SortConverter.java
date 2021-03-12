@@ -8,6 +8,8 @@ public class SortConverter implements IStringConverter<AbstractSort> {
 
   @Override
   public AbstractSort convert(String value) {
-    return SortingStrategy.fromString(value).get().getSort();
+    return SortingStrategy.fromString(value).map(SortingStrategy::getSort).orElseThrow(
+        () -> new IllegalArgumentException("Somehow unknown type of sort was passedA " + value)
+    );
   }
 }

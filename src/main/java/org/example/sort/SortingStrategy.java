@@ -1,8 +1,8 @@
 package org.example.sort;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import lombok.Getter;
 
 public enum SortingStrategy {
@@ -16,7 +16,7 @@ public enum SortingStrategy {
     this.sort = sort;
   }
 
-  private static Map<String, SortingStrategy> values = new HashMap<>(5);
+  private static Map<String, SortingStrategy> values = new TreeMap<>();
 
   static {
     values.put(BUBBLE.name().toLowerCase(), BUBBLE);

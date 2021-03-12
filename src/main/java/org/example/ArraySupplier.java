@@ -1,7 +1,10 @@
 package org.example;
 
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
-import java.util.function.Supplier;
+import java.util.TreeMap;
+import java.util.function.IntFunction;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -9,29 +12,46 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArraySupplier {
 
+  public enum Type {
+    RANDOM, SORTED, INVERSE_SORTED;
+
+    private static Map<String, ArraySupplier> values = new TreeMap<>();
+
+    static {
+      values.put(RANDOM.name().toLowerCase(), randomArraySupplier(SEED));
+      values.put(SORTED.name().toLowerCase(), sortedArraySupplier());
+      values.put(INVERSE_SORTED.name().toLowerCase(), inverseSortedArraySupplier());
+    }
+
+    public static Optional<ArraySupplier> fromString(String value) {
+      return Optional.ofNullable(values.get(value));
+    }
+  }
+
   private static final int MAX_INT = 22500;
+  private static final long SEED = 1349;
 
   @Getter
   private final String label;
-  private final Supplier<int[]> supplier;
+  private final IntFunction<int[]> supplier;
 
-  public int[] getArray() {
-    return supplier.get();
+  public int[] getArray(int size) {
+    return supplier.apply(size);
   }
 
-  public static ArraySupplier randomArraySupplier(long seed, int size) {
+  public static ArraySupplier randomArraySupplier(long seed) {
     return new ArraySupplier("Array with uniformly distributed values",
-        () -> randomArray(seed, size));
+        size -> randomArray(seed, size));
   }
 
-  public static ArraySupplier sortedArraySupplier(int size) {
+  public static ArraySupplier sortedArraySupplier() {
     return new ArraySupplier("Array sorted in ascending order",
-        () -> sortedArray(size));
+        ArraySupplier::sortedArray);
   }
 
-  public static ArraySupplier inverseSortedArraySupplier(int size) {
+  public static ArraySupplier inverseSortedArraySupplier() {
     return new ArraySupplier("Array sorted in descending order",
-        () -> inverseSortedArray(size));
+        ArraySupplier::inverseSortedArray);
   }
 
   public static int[] randomArray(long seed, int size) {
