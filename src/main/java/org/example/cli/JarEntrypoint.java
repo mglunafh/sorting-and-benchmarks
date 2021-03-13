@@ -59,9 +59,9 @@ public class JarEntrypoint {
     @Parameter(names = "-n", description = "Size of array.")
     private int size = 1000;
 
-    @Parameter(names = "-i", description = "Number of iterations. Should be greater than 2.",
+    @Parameter(names = "-i", description = "Number of iterations. Should be greater than 3.",
         validateWith = IterationValidator.class)
-    private int iterations = 2;
+    private int iterations = 3;
 
     @Parameter(names = "--sort", description = "Sort types to use separated by comma."
         + " Currently supported: bubble, insertion, selection, shell, standard",

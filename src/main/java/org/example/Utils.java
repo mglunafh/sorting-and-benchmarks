@@ -15,9 +15,12 @@ public class Utils {
   }
 
   public static Stats getStats(long[] array) {
+    if (array.length == 1) {
+      return new Stats(array[0], array[0]);
+    }
 
     Arrays.sort(array);
-    long median = array[array.length / 2 + 1];
+    long median = array[(array.length + 1) / 2];
     double mean = 0;
     for (int i = 0; i < array.length; i++) {
       mean += (array[i] - mean) / (i + 1);

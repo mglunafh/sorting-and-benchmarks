@@ -8,4 +8,3 @@ TODO: heap sort
 TODO: Implement use of parallelism for O(n^2) algorithms
 
 - Bugs
-TODO: ArrayIndexOfBoundException when running with 4 iterations or less
