@@ -69,7 +69,7 @@ public class JarEntrypoint {
     private List<AbstractSort> sorts = Collections.emptyList();
 
     @Parameter(names = "--arrays", description = "Types of array separated by comma, on which "
-        + "sorting algorithms are run. Currently supported: random, sorted, inverse_sorted",
+        + "sorting algorithms are run. Currently supported: random, sorted, inverse_sorted, mainly_sorted",
         converter = ArrayTypeConverter.class, validateWith = ArrayTypeValidator.class, required = true)
     private List<ArraySupplier> arraySuppliers = Collections.emptyList();
   }

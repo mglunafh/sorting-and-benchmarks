@@ -70,7 +70,7 @@ public class PrettyPrinter {
   private static void printValueRows(List<BenchmarkStrategyRun> runs, int[] columnWidths,
       String runFormatter) {
     BenchmarkStrategyRun firstRun = runs.get(0);
-    for (int i = 0; i < firstRun.getIterations(); i++) {
+    for (int i = 2; i < firstRun.getIterations(); i++) {
       StringBuilder rowSb = new StringBuilder();
       String firstVal = String.format(runFormatter, i + 1);
       rowSb.append(firstVal).append('|');

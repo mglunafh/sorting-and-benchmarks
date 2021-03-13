@@ -11,7 +11,7 @@ import org.example.sort.StandardSort;
 public class App {
 
   private static final long SEED = 150;
-  private static final int ITERATIONS = 7;
+  private static final int ITERATIONS = 5;
 
   public static void main(String[] args) {
     System.out.printf("Seed value: %d%n", SEED);
@@ -23,8 +23,9 @@ public class App {
     System.out.printf("Number of iterations: %d%n", ITERATIONS);
 
     Experiment experiment = new Experiment(size, ITERATIONS)
-        .addSupplier(ArraySupplier.randomArraySupplier(SEED))
         .addSupplier(ArraySupplier.sortedArraySupplier())
+        .addSupplier(ArraySupplier.mainlySortedArraySupplier(SEED))
+        .addSupplier(ArraySupplier.randomArraySupplier(SEED))
         .addSupplier(ArraySupplier.inverseSortedArraySupplier())
         .add(new BubbleSort())
         .add(new StandardSort())
