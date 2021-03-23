@@ -13,26 +13,15 @@ import org.example.sort.AbstractSort;
 @RequiredArgsConstructor
 public class Experiment {
 
-  private final List<ArraySupplier> suppliers = new ArrayList<>();
+  private Iterable<ArraySupplier> suppliers = new ArrayList<>();
   private final List<AbstractSort> strategies = new ArrayList<>();
   @Getter
   private final List<BenchmarkArrayRun> arrayBenchmarks = new ArrayList<>();
 
-  private final int size;
   private final int iterations;
 
-  public Experiment addSupplier(ArraySupplier supplier) {
-    suppliers.add(supplier);
-    return this;
-  }
-
-  public Experiment addSuppliers(Collection<ArraySupplier> someSuppliers) {
-    suppliers.addAll(someSuppliers);
-    return this;
-  }
-
-  public Experiment addSuppliers(ArraySupplier... someSuppliers) {
-    suppliers.addAll(Arrays.asList(someSuppliers));
+  public Experiment addSuppliers(Iterable<ArraySupplier> someSuppliers) {
+    suppliers = someSuppliers;
     return this;
   }
 
@@ -53,12 +42,12 @@ public class Experiment {
 
   public void run() {
     for (ArraySupplier supplier : suppliers) {
-      int[] arr = supplier.getArray(size);
+      int[] arr = supplier.getArray();
       ArrayList<BenchmarkStrategyRun> strategyBenchmarks = new ArrayList<>();
       for (AbstractSort strategy : strategies) {
         strategyBenchmarks.add(runBenchmark(strategy, arr));
       }
-      String label = String.format("%s, n=%d", supplier.getLabel(), size);
+      String label = String.format("%s, n=%d", supplier.getLabel(), arr.length);
       arrayBenchmarks.add(new BenchmarkArrayRun(label, strategyBenchmarks));
     }
   }

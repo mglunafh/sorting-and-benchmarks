@@ -1,30 +1,37 @@
 package org.example;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.TreeMap;
-import java.util.function.IntFunction;
+import java.util.function.Supplier;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 @RequiredArgsConstructor
 public class ArraySupplier {
 
+  @RequiredArgsConstructor
   public enum Type {
-    RANDOM, SORTED, INVERSE_SORTED, MAINLY_SORTED;
+    RANDOM("Array with uniformly distributed values"),
+    SORTED("Array sorted in ascending order"),
+    INVERSE_SORTED("Array sorted in descending order"),
+    MAINLY_SORTED("Array generally sorted in ascending order");
 
-    private static final Map<String, ArraySupplier> values = new TreeMap<>();
+    @Getter
+    final String label;
+
+    private static final Map<String, Type> values = new HashMap<>();
 
     static {
-      values.put(RANDOM.name().toLowerCase(), randomArraySupplier(SEED));
-      values.put(SORTED.name().toLowerCase(), sortedArraySupplier());
-      values.put(INVERSE_SORTED.name().toLowerCase(), inverseSortedArraySupplier());
-      values.put(MAINLY_SORTED.name().toLowerCase(), mainlySortedArraySupplier(SEED));
+      for (Type c : values()) {
+        values.put(c.name().toLowerCase(), c);
+      }
     }
 
-    public static Optional<ArraySupplier> fromString(String value) {
+    public static Optional<Type> fromString(String value) {
       return Optional.ofNullable(values.get(value));
     }
   }
@@ -34,30 +41,27 @@ public class ArraySupplier {
 
   @Getter
   private final String label;
-  private final IntFunction<int[]> supplier;
+  private final Supplier<int[]> supplier;
+  private final int size;
 
-  public int[] getArray(int size) {
-    return supplier.apply(size);
+  public int[] getArray() {
+    return supplier.get();
   }
 
-  public static ArraySupplier randomArraySupplier(long seed) {
-    return new ArraySupplier("Array with uniformly distributed values",
-        size -> randomArray(seed, size));
-  }
+  public static ArraySupplier fromType(Type type, int size) {
 
-  public static ArraySupplier sortedArraySupplier() {
-    return new ArraySupplier("Array sorted in ascending order",
-        ArraySupplier::sortedArray);
-  }
-
-  public static ArraySupplier inverseSortedArraySupplier() {
-    return new ArraySupplier("Array sorted in descending order",
-        ArraySupplier::inverseSortedArray);
-  }
-
-  public static ArraySupplier mainlySortedArraySupplier(long seed) {
-    return new ArraySupplier("Array generally sorted in ascending order",
-        size -> mainlySortedArray(seed, size));
+    switch (type) {
+      case RANDOM:
+        return new ArraySupplier(type.label, () -> randomArray(SEED, size), size);
+      case SORTED:
+        return new ArraySupplier(type.label, () -> sortedArray(size), size);
+      case INVERSE_SORTED:
+        return new ArraySupplier(type.label, () -> inverseSortedArray(size), size);
+      case MAINLY_SORTED:
+        return new ArraySupplier(type.label, () -> mainlySortedArray(SEED, size), size);
+      default:
+        throw new NotImplementedException();
+    }
   }
 
   public static int[] randomArray(long seed, int size) {

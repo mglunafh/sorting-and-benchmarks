@@ -33,14 +33,18 @@ public class JarEntrypoint {
       return;
     }
 
-    System.out.printf("Number of elements: %d%n", jArgs.getSize());
+    int size = jArgs.getSize();
+    System.out.printf("Number of elements: %d%n", size);
     System.out.printf("Number of iterations: %d%n", jArgs.getIterations());
     String sortsToUse = jArgs.getSorts().stream().map(AbstractSort::getName)
         .collect(Collectors.joining(", "));
     System.out.printf("Sorts to use: %s%n", sortsToUse);
 
-    Experiment experiment = new Experiment(jArgs.getSize(), jArgs.getIterations())
-        .addSuppliers(jArgs.getArraySuppliers())
+    List<ArraySupplier> suppliers = jArgs.getSupplierTypes().stream()
+        .map(type -> ArraySupplier.fromType(type, size)).collect(Collectors.toList());
+
+    Experiment experiment = new Experiment(jArgs.getIterations())
+        .addSuppliers(suppliers)
         .add(jArgs.getSorts());
     experiment.run();
 
@@ -71,6 +75,6 @@ public class JarEntrypoint {
     @Parameter(names = "--arrays", description = "Types of array separated by comma, on which "
         + "sorting algorithms are run. Currently supported: random, sorted, inverse_sorted, mainly_sorted",
         converter = ArrayTypeConverter.class, validateWith = ArrayTypeValidator.class, required = true)
-    private List<ArraySupplier> arraySuppliers = Collections.emptyList();
+    private List<ArraySupplier.Type> supplierTypes = Collections.emptyList();
   }
 }
