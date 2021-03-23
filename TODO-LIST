@@ -1,5 +1,4 @@
 - A couple of more sorting algorithms
-TODO: heap sort
 
 - Use of parallelism
 TODO: Implement use of parallelism for O(n^2) algorithms

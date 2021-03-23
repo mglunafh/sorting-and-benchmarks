@@ -14,11 +14,34 @@ public class HeapSort implements AbstractSort {
     assert start >= 0 : String.format("Start (%d) is a negative number", start);
     assert stop <= arr.length : String.format("Stop (%d) is greater than arr length (%d)", stop, arr.length);
 
-    for (int i = stop; i > start; i--) {
-      for (int j = start + 1; j < i; j++) {
+    for (int j = start + 1; j < stop; j++) {
         emerge(arr, start, j);
+    }
+
+    for (int i = stop - 1; i > start + 1; i--) {
+      swap(arr, start, i);
+      drown(arr, start, i);
+    }
+    if (arr[start] > arr[start + 1]) {
+      swap(arr, start, start + 1);
+    }
+  }
+
+  private void drown(int[] arr, int start,  int stop) {
+    int tempIndex = start;
+    while (tempIndex < (stop - start - 1) / 2) {
+      int child1 = 2 * tempIndex + 1;
+      int child2 = 2 * tempIndex + 2;
+      if (arr[child1] > arr[child2] && arr[child1] > arr[tempIndex]) {
+        swap(arr, child1, tempIndex);
+        tempIndex = child1;
       }
-      swap(arr, start, i - 1);
+      else if (arr[child2] >= arr[child1] && arr[child2] > arr[tempIndex]) {
+        swap(arr, child2, tempIndex);
+        tempIndex = child2;
+      }
+      else
+        break;
     }
   }
 
