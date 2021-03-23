@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.example.ArraySupplier.Type;
 import org.example.sort.BubbleSort;
+import org.example.sort.HeapSort;
 import org.example.sort.InsertionSort;
 import org.example.sort.SelectionSort;
 import org.example.sort.ShellSort;
@@ -15,9 +16,7 @@ public class App {
   private static final int ITERATIONS = 5;
 
   public static void main(String[] args) {
-    int size = 30000;
-    int count = Runtime.getRuntime().availableProcessors();
-    System.out.printf("Number of cores: %d%n", count);
+    int size = 10000;
     System.out.printf("Number of elements: %d%n", size);
     System.out.printf("Number of iterations: %d%n", ITERATIONS);
 
@@ -34,7 +33,8 @@ public class App {
         .add(new StandardSort())
         .add(new ShellSort())
         .add(new InsertionSort())
-        .add(new SelectionSort());
+        .add(new SelectionSort())
+        .add(new HeapSort());
 
     experiment.run();
 

@@ -10,6 +10,7 @@ public enum SortingStrategy {
   INSERTION(new InsertionSort()),
   SELECTION(new SelectionSort()),
   SHELL(new ShellSort()),
+  HEAP(new HeapSort()),
   STANDARD(new StandardSort());
 
   SortingStrategy(AbstractSort sort) {
@@ -19,11 +20,9 @@ public enum SortingStrategy {
   private static Map<String, SortingStrategy> values = new TreeMap<>();
 
   static {
-    values.put(BUBBLE.name().toLowerCase(), BUBBLE);
-    values.put(INSERTION.name().toLowerCase(), INSERTION);
-    values.put(SELECTION.name().toLowerCase(), SELECTION);
-    values.put(SHELL.name().toLowerCase(), SHELL);
-    values.put(STANDARD.name().toLowerCase(), STANDARD);
+    for (SortingStrategy strategy : SortingStrategy.values()) {
+      values.put(strategy.name().toLowerCase(), strategy);
+    }
   }
 
   public static Optional<SortingStrategy> fromString(String value) {

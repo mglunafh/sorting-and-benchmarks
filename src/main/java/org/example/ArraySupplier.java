@@ -1,9 +1,9 @@
 package org.example;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.function.Supplier;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ArraySupplier {
     @Getter
     final String label;
 
-    private static final Map<String, Type> values = new HashMap<>();
+    private static final Map<String, Type> values = new TreeMap<>();
 
     static {
       for (Type c : values()) {

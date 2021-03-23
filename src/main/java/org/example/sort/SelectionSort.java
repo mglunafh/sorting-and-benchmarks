@@ -20,9 +20,7 @@ public class SelectionSort implements AbstractSort {
           tempIndex = j;
         }
       }
-      int temp = arr[i];
-      arr[i] = arr[tempIndex];
-      arr[tempIndex] = temp;
+      swap(arr, i, tempIndex);
     }
   }
 }

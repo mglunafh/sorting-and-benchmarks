@@ -68,7 +68,7 @@ public class JarEntrypoint {
     private int iterations = 3;
 
     @Parameter(names = "--sort", description = "Sort types to use separated by comma."
-        + " Currently supported: bubble, insertion, selection, shell, standard",
+        + " Currently supported: bubble, insertion, selection, shell, heap, standard",
         converter = SortConverter.class, validateWith = SortValidator.class, required = true)
     private List<AbstractSort> sorts = Collections.emptyList();
 

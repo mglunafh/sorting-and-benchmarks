@@ -9,4 +9,10 @@ public interface AbstractSort {
   default void sortArray(int[] arr) {
     sortArray(arr, 0, arr.length);
   }
+
+  default void swap(int[] arr, int from, int to) {
+    int temp = arr[from];
+    arr[from] = arr[to];
+    arr[to] = temp;
+  }
 }

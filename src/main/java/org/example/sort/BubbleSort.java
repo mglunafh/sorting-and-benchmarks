@@ -18,9 +18,7 @@ public class BubbleSort implements AbstractSort {
     for (int i = start; i < stop; i++) {
       for (int j = start + 1; j < stop - i; j++) {
         if (arr[j - 1] > arr[j]) {
-          int temp = arr[j];
-          arr[j] = arr[j - 1];
-          arr[j - 1] = temp;
+          swap(arr, j, j - 1);
         }
       }
     }

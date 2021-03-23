@@ -16,9 +16,7 @@ public class InsertionSort implements AbstractSort {
     for (int i = start + 1; i < stop; i++) {
       for (int j = i; j > start; j--) {
         if (arr[j] < arr[j - 1]) {
-          int temp = arr[j];
-          arr[j] = arr[j - 1];
-          arr[j - 1] = temp;
+          swap(arr, j, j - 1);
         }
       }
     }
