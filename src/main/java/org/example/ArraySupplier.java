@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.function.Supplier;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 @RequiredArgsConstructor
@@ -41,8 +40,9 @@ public class ArraySupplier {
 
   @Getter
   private final String label;
-  private final Supplier<int[]> supplier;
+  @Getter
   private final int size;
+  private final Supplier<int[]> supplier;
 
   public int[] getArray() {
     return supplier.get();
@@ -52,15 +52,15 @@ public class ArraySupplier {
 
     switch (type) {
       case RANDOM:
-        return new ArraySupplier(type.label, () -> randomArray(SEED, size), size);
+        return new ArraySupplier(type.label, size, () -> randomArray(SEED, size));
       case SORTED:
-        return new ArraySupplier(type.label, () -> sortedArray(size), size);
+        return new ArraySupplier(type.label, size, () -> sortedArray(size));
       case INVERSE_SORTED:
-        return new ArraySupplier(type.label, () -> inverseSortedArray(size), size);
+        return new ArraySupplier(type.label, size, () -> inverseSortedArray(size));
       case MAINLY_SORTED:
-        return new ArraySupplier(type.label, () -> mainlySortedArray(SEED, size), size);
+        return new ArraySupplier(type.label, size, () -> mainlySortedArray(SEED, size));
       default:
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not implemented yet");
     }
   }
 
